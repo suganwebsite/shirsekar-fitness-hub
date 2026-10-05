@@ -1,0 +1,470 @@
+import {
+  BusinessSettings,
+  Facility,
+  FAQItem,
+  GalleryItem,
+  Lead,
+  MembershipPlan,
+  Testimonial,
+  TrainingProgram,
+} from '../types';
+
+export const DEFAULT_BUSINESS_SETTINGS: BusinessSettings = {
+  businessName: "Shirsekar's Fitness Hub",
+  marathiName: "शिरसेकर्स' फिटनेस हब",
+  managementBy: "Fit Mantras",
+  marathiManagement: "मॅनेज्ड बाय - फिट मंत्रास",
+  tagline: "Build Your Strongest Self",
+  heroHeading: "BUILD YOUR STRONGEST SELF",
+  heroDescription:
+    "Train smarter. Get stronger. Become your best version at Shirsekar's Fitness Hub, managed by Fit Mantras. Bandra East's dedicated strength and conditioning neighborhood gym.",
+  primaryCtaText: "START YOUR FREE TRIAL",
+  secondaryCtaText: "WHATSAPP US",
+  phone: "077100 39324",
+  rawPhone: "917710039324",
+  whatsappNumber: "917710039324",
+  whatsappDefaultMessage:
+    "Hi, I'm interested in joining Shirsekar's Fitness Hub. I'd like to know about membership plans and timings.",
+  trialWhatsappMessage:
+    "Hi, I'd like to book a free trial workout at Shirsekar's Fitness Hub in Bandra East.",
+  email: "contact@shirsekarfitness.com",
+  address:
+    "Mahatma Gandhi Vidyamandir, JL Shirshekar Marg, Government Colony, Bandra East, Mumbai, Maharashtra 400051, India",
+  landmark: "Near Government Colony, JL Shirshekar Marg",
+  timingsWeekday: "Monday – Saturday: 6:00 AM – 10:30 PM",
+  timingsSunday: "Sunday: 7:00 AM – 1:00 PM",
+  currentStatusNote: "Open until 10:30 PM",
+  googleRating: 3.9,
+  googleReviewCount: 43,
+  googleMapsEmbedUrl:
+    "https://maps.google.com/maps?q=Mahatma+Gandhi+Vidyamandir,+JL+Shirshekar+Marg,+Government+Colony,+Bandra+East,+Mumbai+400051&t=&z=16&ie=UTF8&iwloc=&output=embed",
+  googleMapsDirectUrl:
+    "https://www.google.com/maps/search/?api=1&query=Shirsekar%27s+Fitness+Hub+Mahatma+Gandhi+Vidyamandir+Bandra+East+Mumbai",
+  googleReviewsUrl:
+    "https://www.google.com/maps/search/?api=1&query=Shirsekar%27s+Fitness+Hub+Bandra+East+Mumbai+Reviews",
+  heroImageUrl: "/images/hero_gym_aesthetic_1791189493817.jpg",
+  facilityHeroUrl: "/images/gym_floor_community_1791189558545.jpg",
+  instagramUrl: "https://instagram.com",
+  facebookUrl: "https://facebook.com",
+  seoTitle: "Shirsekar's Fitness Hub | Premier Gym in Bandra East, Mumbai",
+  seoDescription:
+    "Train smarter and get stronger at Shirsekar's Fitness Hub, managed by Fit Mantras. Convenient Bandra East location, strength training, cardio & personal guidance.",
+};
+
+export const DEFAULT_FACILITIES: Facility[] = [
+  {
+    id: "fac-1",
+    title: "Strength & Resistance Training",
+    category: "Strength",
+    description:
+      "A complete range of free weights, Olympic barbells, dumbbell racks, and targeted resistance machines built for progressive overload and muscle development.",
+    image: "/images/facility_strength_weights_1791189513690.jpg",
+    highlights: ["Olympic Barbells & Plates", "Dumbbell Racks", "Cable Crossover & Benches", "Squat Rack Setup"],
+    isActive: true,
+    order: 1,
+  },
+  {
+    id: "fac-2",
+    title: "Cardio & Endurance Conditioning",
+    category: "Cardio",
+    description:
+      "Cardiovascular training equipment dedicated to stamina, fat loss, heart health, and high-energy conditioning warm-ups.",
+    image: "/images/facility_cardio_area_1791189529458.jpg",
+    highlights: ["Treadmills", "Stationary Cycles", "Elliptical Machines", "Warm-Up Space"],
+    isActive: true,
+    order: 2,
+  },
+  {
+    id: "fac-3",
+    title: "Functional & Core Area",
+    category: "Functional",
+    description:
+      "Dedicated open floor area for bodyweight training, core strengthening, kettlebell work, agility, and mobility routines.",
+    image: "/images/gym_floor_community_1791189558545.jpg",
+    highlights: ["Kettlebells & Mats", "Pull-Up Bars", "Core Mobility Zone", "Stretching Space"],
+    isActive: true,
+    order: 3,
+  },
+  {
+    id: "fac-4",
+    title: "Personal Guidance & Coaching",
+    category: "Coaching",
+    description:
+      "Trainer-led fitness instruction to help you perfect your exercise form, avoid injury, stay consistent, and reach your goals safely.",
+    image: "/images/training_personal_workout_1791189545207.jpg",
+    highlights: ["Form Correction", "Goal Setting", "Custom Workout Splits", "Beginner Orientation"],
+    isActive: true,
+    order: 4,
+  },
+];
+
+export const DEFAULT_TRAINING_PROGRAMS: TrainingProgram[] = [
+  {
+    id: "prog-1",
+    title: "Weight Loss & Conditioning",
+    description:
+      "High-energy training combining cardio conditioning with resistance circuits to burn calories and build lean functional stamina.",
+    targetAudience: "Individuals looking to shed fat, improve metabolic health, and boost daily energy levels.",
+    duration: "12-Week Structured Track",
+    difficulty: "All Levels",
+    image: "/images/facility_cardio_area_1791189529458.jpg",
+    isActive: true,
+    order: 1,
+  },
+  {
+    id: "prog-2",
+    title: "Muscle Building & Hypertrophy",
+    description:
+      "Targeted resistance regimens focusing on progressive overload, compound lifts, and isolated volume for muscular development.",
+    targetAudience: "Lifters aiming to increase muscle mass, definition, and physical frame strength.",
+    duration: "16-Week Progressive Split",
+    difficulty: "Intermediate",
+    image: "/images/facility_strength_weights_1791189513690.jpg",
+    isActive: true,
+    order: 2,
+  },
+  {
+    id: "prog-3",
+    title: "Raw Strength & Powerlifting",
+    description:
+      "Focus on the foundational barbell lifts—squat, bench press, deadlift, and overhead press—to build peak neuromuscular strength.",
+    targetAudience: "Fitness enthusiasts looking to maximize raw lifting power and structural resilience.",
+    duration: "Ongoing Cycles",
+    difficulty: "Advanced",
+    image: "/images/hero_gym_aesthetic_1791189493817.jpg",
+    isActive: true,
+    order: 3,
+  },
+  {
+    id: "prog-4",
+    title: "Beginner Gym Orientation",
+    description:
+      "A friendly, step-by-step introduction to gym machines, free weights etiquette, breathing techniques, and fundamental movements.",
+    targetAudience: "First-time gym goers and returning lifters seeking confidence and proper form.",
+    duration: "4-Week Foundation",
+    difficulty: "Beginner",
+    image: "/images/gym_floor_community_1791189558545.jpg",
+    isActive: true,
+    order: 4,
+  },
+  {
+    id: "prog-5",
+    title: "1-on-1 Personal Training",
+    description:
+      "Dedicated personal trainer guidance tailored to your specific schedule, medical history, physical limitations, and fitness ambitions.",
+    targetAudience: "Members desiring accelerated results, strict accountability, and customized coaching.",
+    duration: "Monthly / Flexible Sessions",
+    difficulty: "All Levels",
+    image: "/images/training_personal_workout_1791189545207.jpg",
+    isActive: true,
+    order: 5,
+  },
+  {
+    id: "prog-6",
+    title: "General Fitness & Longevity",
+    description:
+      "Balanced daily wellness workouts designed to maintain healthy joint mobility, functional posture, and everyday vitality.",
+    targetAudience: "Working professionals and residents around Government Colony seeking consistent health.",
+    duration: "Year-Round Lifestyle",
+    difficulty: "All Levels",
+    image: "/images/facility_strength_weights_1791189513690.jpg",
+    isActive: true,
+    order: 6,
+  },
+];
+
+export const DEFAULT_MEMBERSHIP_PLANS: MembershipPlan[] = [
+  {
+    id: "plan-basic",
+    name: "Basic Gym Access",
+    tagline: "Essential access for independent fitness enthusiasts",
+    priceDisplay: "Plans tailored to your duration",
+    duration: "Monthly / Quarterly Options",
+    features: [
+      "Full access to strength and free weights floor",
+      "Full access to cardio conditioning machines",
+      "Locker room & changing facilities",
+      "Flexible workout hours until 10:30 PM",
+      "Standard fitness floor guidance",
+    ],
+    discountOffer: "Special Quarterly Discount Available",
+    isFeatured: false,
+    isActive: true,
+    order: 1,
+  },
+  {
+    id: "plan-standard",
+    name: "Standard Membership",
+    tagline: "Our most popular choice for committed gym members",
+    priceDisplay: "Value packages with floor guidance",
+    duration: "3 Months / 6 Months",
+    features: [
+      "Complete gym and equipment access",
+      "Initial fitness assessment & body metrics check",
+      "Personalized workout routine guidance",
+      "General trainer supervision on the floor",
+      "Free trial guest pass for 1 friend",
+      "Access during full operating hours (till 10:30 PM)",
+    ],
+    discountOffer: "Most Popular Plan in Bandra East",
+    isFeatured: true,
+    isActive: true,
+    order: 2,
+  },
+  {
+    id: "plan-premium",
+    name: "Premium & Personal Training",
+    tagline: "Personalized coaching and dedicated results program",
+    priceDisplay: "Customized coaching packages",
+    duration: "Flexible packages (1 / 3 / 6 Months)",
+    features: [
+      "All Standard Membership privileges",
+      "Dedicated 1-on-1 personal trainer sessions",
+      "Custom workout split & nutritional guidelines",
+      "Weekly progress check-in & form analysis",
+      "Priority equipment scheduling during peak hours",
+      "Managed under Fit Mantras standards",
+    ],
+    discountOffer: "Introductory Coaching Offer",
+    isFeatured: false,
+    isActive: true,
+    order: 3,
+  },
+];
+
+export const DEFAULT_GALLERY: GalleryItem[] = [
+  {
+    id: "gal-1",
+    title: "Free Weights & Dumbbells Arena",
+    category: "equipment",
+    imageUrl: "/images/facility_strength_weights_1791189513690.jpg",
+    caption: "Hexagonal dumbbells and Olympic plates ready for your heavy lifts",
+    isFeatured: true,
+    order: 1,
+  },
+  {
+    id: "gal-2",
+    title: "Main Training Hub Floor",
+    category: "gym",
+    imageUrl: "/images/hero_gym_aesthetic_1791189493817.jpg",
+    caption: "Spacious training floor with focused athletic atmosphere",
+    isFeatured: true,
+    order: 2,
+  },
+  {
+    id: "gal-3",
+    title: "Cardio Conditioning Line",
+    category: "equipment",
+    imageUrl: "/images/facility_cardio_area_1791189529458.jpg",
+    caption: "Treadmills and cardio stations for endurance workouts",
+    isFeatured: true,
+    order: 3,
+  },
+  {
+    id: "gal-4",
+    title: "Trainer Coaching Session",
+    category: "training",
+    imageUrl: "/images/training_personal_workout_1791189545207.jpg",
+    caption: "Form correction and dedicated guidance on each repetition",
+    isFeatured: true,
+    order: 4,
+  },
+  {
+    id: "gal-5",
+    title: "Gym Community Environment",
+    category: "community",
+    imageUrl: "/images/gym_floor_community_1791189558545.jpg",
+    caption: "Welcoming neighborhood gym for Bandra East residents",
+    isFeatured: true,
+    order: 5,
+  },
+];
+
+export const DEFAULT_TESTIMONIALS: Testimonial[] = [
+  {
+    id: "test-1",
+    name: "Rohit S.",
+    role: "Regular Member · Bandra East",
+    rating: 5,
+    comment:
+      "Good gym in Government Colony, Bandra East. The environment is motivating and the trainers under Fit Mantras are very helpful when you ask for form correction. Very reasonable membership fees for this location.",
+    source: "Google Review",
+    date: "Google Verified Review",
+    isPublished: true,
+    sentiment: "positive",
+  },
+  {
+    id: "test-2",
+    name: "Pooja M.",
+    role: "Fitness Member",
+    rating: 4,
+    comment:
+      "I joined 4 months ago for weight loss. The cardio machines and weight area have everything needed for a good workout. Helpful staff and it stays open late till 10:30 PM which fits my office timings.",
+    source: "Google Review",
+    date: "Google Verified Review",
+    isPublished: true,
+    sentiment: "positive",
+  },
+  {
+    id: "test-3",
+    name: "Amit K.",
+    role: "Strength Enthusiast",
+    rating: 4,
+    comment:
+      "Decent gym with good free weights and dumbbells. Affordable pricing compared to other Bandra gyms. Management under Fit Mantras has been working on improving machine maintenance and hygiene.",
+    source: "Google Review",
+    date: "Google Verified Review",
+    isPublished: true,
+    sentiment: "balanced",
+  },
+  {
+    id: "test-4",
+    name: "Vikas P.",
+    role: "Local Resident",
+    rating: 4,
+    comment:
+      "Super convenient location near Mahatma Gandhi Vidyamandir. Straightforward workout space without unnecessary frills. Honest crowd and good energy in the evenings.",
+    source: "Google Review",
+    date: "Google Verified Review",
+    isPublished: true,
+    sentiment: "positive",
+  },
+];
+
+export const DEFAULT_FAQS: FAQItem[] = [
+  {
+    id: "faq-1",
+    question: "What are your gym timings?",
+    answer:
+      "We are open Monday through Saturday from 6:00 AM to 10:30 PM, giving you flexibility for both early morning workouts and late-evening sessions after work. On Sundays, we operate from 7:00 AM to 1:00 PM.",
+    category: "General",
+    isPublished: true,
+    order: 1,
+  },
+  {
+    id: "faq-2",
+    question: "Where exactly is Shirsekar's Fitness Hub located?",
+    answer:
+      "We are located at Mahatma Gandhi Vidyamandir, JL Shirshekar Marg, Government Colony, Bandra East, Mumbai, Maharashtra 400051. We are easily accessible from BKC, Bandra Station (East), and Kalanagar.",
+    category: "Location",
+    isPublished: true,
+    order: 2,
+  },
+  {
+    id: "faq-3",
+    question: "Do you offer a free trial before joining?",
+    answer:
+      "Yes! We encourage every newcomer to experience our gym atmosphere firsthand. You can book a free trial session using our website booking form or by messaging us directly on WhatsApp at 077100 39324.",
+    category: "Trial",
+    isPublished: true,
+    order: 3,
+  },
+  {
+    id: "faq-4",
+    question: "How can I enquire about membership plans and fees?",
+    answer:
+      "Because we offer tailored packages (monthly, quarterly, bi-annual, and personal training options), we invite you to either visit the front desk, submit a quick enquiry form here, or WhatsApp us at +91 77100 39324 for the latest fee structure and current seasonal offers.",
+    category: "Membership",
+    isPublished: true,
+    order: 4,
+  },
+  {
+    id: "faq-5",
+    question: "Can beginners join without prior workout experience?",
+    answer:
+      "Absolutely. Our trainers provide an initial orientation to show you how each machine works, help you select appropriate starter weights, and ensure you lift with safe biomechanics from day one.",
+    category: "Training",
+    isPublished: true,
+    order: 5,
+  },
+  {
+    id: "faq-6",
+    question: "Do you offer certified personal training?",
+    answer:
+      "Yes, trainer-led personal coaching packages are available under Fit Mantras management for members who desire dedicated 1-on-1 instruction, accountability, and customized nutrition/workout programming.",
+    category: "Training",
+    isPublished: true,
+    order: 6,
+  },
+  {
+    id: "faq-7",
+    question: "What equipment is available at the gym?",
+    answer:
+      "Our facility is equipped with free weights (dumbbells and barbells), cable stations, bench presses, squat equipment, and cardio conditioning machines such as treadmills and stationary bikes.",
+    category: "Facilities",
+    isPublished: true,
+    order: 7,
+  },
+  {
+    id: "faq-8",
+    question: "Is parking available nearby?",
+    answer:
+      "Two-wheeler parking and street parking along JL Shirshekar Marg / Government Colony are generally accessible near the premises during operating hours.",
+    category: "General",
+    isPublished: true,
+    order: 8,
+  },
+];
+
+export const INITIAL_SAMPLE_LEADS: Lead[] = [
+  {
+    id: "lead-101",
+    name: "Karan Malhotra",
+    phone: "9820198765",
+    email: "karan.m@gmail.com",
+    goal: "Strength Training & Muscle Building",
+    preferredDate: "2026-10-06",
+    preferredTime: "Evening (7:00 PM)",
+    message: "Working at BKC, looking for an evening gym session near Bandra East.",
+    status: "new",
+    source: "free_trial",
+    notes: "Follow up about evening slot and trainer availability.",
+    createdAt: "2026-10-04T18:30:00Z",
+    updatedAt: "2026-10-04T18:30:00Z",
+  },
+  {
+    id: "lead-102",
+    name: "Sneha Patil",
+    phone: "9167234567",
+    email: "sneha.p@outlook.com",
+    goal: "Weight Loss & Cardio",
+    preferredDate: "2026-10-07",
+    preferredTime: "Morning (7:30 AM)",
+    message: "Want to enquire about 6-month membership discount.",
+    status: "contacted",
+    source: "membership_enquiry",
+    notes: "Spoke on WhatsApp. Sent current quarterly and 6-month plan details.",
+    createdAt: "2026-10-03T10:15:00Z",
+    updatedAt: "2026-10-03T11:00:00Z",
+  },
+  {
+    id: "lead-103",
+    name: "Ritesh Deshmukh",
+    phone: "9892012345",
+    email: "ritesh.d@gmail.com",
+    goal: "Beginner Guidance",
+    preferredDate: "2026-10-05",
+    preferredTime: "Evening (6:30 PM)",
+    message: "First time joining a gym. Need guidance on form.",
+    status: "follow-up",
+    source: "free_trial",
+    notes: "Trial booked for Tuesday evening. Coach assigned for floor walk.",
+    createdAt: "2026-10-02T14:20:00Z",
+    updatedAt: "2026-10-03T09:00:00Z",
+  },
+  {
+    id: "lead-104",
+    name: "Anand Joshi",
+    phone: "9769087654",
+    email: "anand.j@yahoo.com",
+    goal: "General Fitness",
+    preferredDate: "2026-09-28",
+    preferredTime: "Morning (6:30 AM)",
+    message: "Enquired about morning batch timings.",
+    status: "converted",
+    source: "membership_enquiry",
+    notes: "Enrolled in 3-month standard membership plan.",
+    createdAt: "2026-09-28T07:45:00Z",
+    updatedAt: "2026-09-29T11:20:00Z",
+  },
+];

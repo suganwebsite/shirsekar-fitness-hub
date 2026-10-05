@@ -1,0 +1,172 @@
+// Prisma schema for Shirsekar's Fitness Hub (Managed by Fit Mantras)
+// Compatible with Vercel deployment and PostgreSQL (Neon, Supabase, Vercel Postgres)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model BusinessSetting {
+  id                     String   @id @default("default")
+  businessName           String   @default("Shirsekar's Fitness Hub")
+  marathiName            String   @default("शिरसेकर्स' फिटनेस हब")
+  managementBy           String   @default("Fit Mantras")
+  marathiManagement      String   @default("मैनेज्ड बाय - फिट मंत्रास")
+  tagline                String   @default("Build Your Strongest Self")
+  heroHeading            String   @default("BUILD YOUR STRONGEST SELF")
+  heroDescription        String   @default("Train smarter. Get stronger. Become your best version at Shirsekar's Fitness Hub, managed by Fit Mantras. Premium gym in Bandra East, Mumbai.")
+  primaryCtaText         String   @default("START YOUR FREE TRIAL")
+  secondaryCtaText       String   @default("WHATSAPP US")
+  phone                  String   @default("077100 39324")
+  rawPhone               String   @default("+917710039324")
+  whatsappNumber         String   @default("+917710039324")
+  whatsappDefaultMessage String   @default("Hi Shirsekar's Fitness Hub, I would like to inquire about membership and gym facilities.")
+  trialWhatsappMessage   String   @default("Hi Shirsekar's Fitness Hub, I would like to book a free trial session.")
+  email                  String   @default("info@shirsekarfitness.com")
+  address                String   @default("Mahatma Gandhi Vidyamandir, JL Shirshekar Marg, Government Colony, Bandra East, Mumbai, Maharashtra 400051")
+  landmark               String   @default("Near Mahatma Gandhi Vidyamandir & Government Colony")
+  timingsWeekday         String   @default("Monday - Saturday: 6:00 AM - 10:30 PM")
+  timingsSunday          String   @default("Sunday: 7:00 AM - 1:00 PM")
+  currentStatusNote      String   @default("Open until 10:30 PM")
+  googleRating           Float    @default(3.9)
+  googleReviewCount      Int      @default(43)
+  googleMapsEmbedUrl     String   @default("https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.218525791775!2d72.8488737!3d19.0541097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c927f8a7e0cb%3A0x6b4efb4d241774b7!2sShirsekar's%20Fitness%20Hub!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin")
+  googleMapsDirectUrl    String   @default("https://maps.google.com/?q=Shirsekar's+Fitness+Hub+Bandra+East+Mumbai")
+  googleReviewsUrl       String   @default("https://search.google.com/local/reviews?placeid=ChIJy-CH-CfZ5zsRt3QXJE37Tms")
+  heroImageUrl           String   @default("/src/assets/images/hero_gym_aesthetic_1791189493817.jpg")
+  facilityHeroUrl        String   @default("/src/assets/images/gym_floor_community_1791189569733.jpg")
+  instagramUrl           String?
+  facebookUrl            String?
+  youtubeUrl             String?
+  seoTitle               String   @default("Shirsekar's Fitness Hub | Gym in Bandra East, Mumbai")
+  seoDescription         String   @default("Premier gym and fitness center in Bandra East, Mumbai managed by Fit Mantras. Strength training, cardio, personal training, and free trial workouts.")
+  googleAnalyticsId      String?
+  metaPixelId            String?
+  updatedAt              DateTime @updatedAt
+}
+
+model Lead {
+  id            String   @id @default(cuid())
+  name          String
+  phone         String
+  email         String?
+  goal          String
+  preferredDate String?
+  preferredTime String?
+  message       String?
+  status        String   @default("new") // 'new' | 'contacted' | 'follow-up' | 'converted' | 'lost'
+  source        String   @default("free_trial") // 'free_trial' | 'membership_enquiry' | 'contact_form' | 'phone_call' | 'whatsapp'
+  notes         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([status])
+  @@index([source])
+  @@index([createdAt])
+}
+
+model MembershipPlan {
+  id            String   @id
+  name          String
+  tagline       String
+  priceDisplay  String
+  duration      String
+  features      String[]
+  discountOffer String?
+  isFeatured    Boolean  @default(false)
+  isActive      Boolean  @default(true)
+  order         Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model TrainingProgram {
+  id             String   @id
+  title          String
+  description    String
+  targetAudience String
+  duration       String
+  difficulty     String   @default("All Levels")
+  image          String
+  isActive       Boolean  @default(true)
+  order          Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Facility {
+  id          String   @id
+  title       String
+  category    String
+  description String
+  image       String
+  highlights  String[]
+  isActive    Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model GalleryItem {
+  id         String   @id
+  title      String
+  category   String   @default("gym")
+  imageUrl   String
+  caption    String?
+  isFeatured Boolean  @default(false)
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Testimonial {
+  id          String   @id
+  name        String
+  role        String?
+  rating      Int      @default(5)
+  comment     String
+  source      String   @default("Google Review")
+  date        String
+  isPublished Boolean  @default(true)
+  sentiment   String?  @default("positive")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model FAQItem {
+  id          String   @id
+  question    String
+  answer      String
+  category    String   @default("General")
+  isPublished Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String
+  email     String?
+  subject   String?
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  role      String   @default("super_admin")
+  lastLogin DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
