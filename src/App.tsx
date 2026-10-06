@@ -86,10 +86,21 @@ export default function App() {
   const [adminUser, setAdminUser] = useState(getAdminAuth);
 
   // Navigation & View state
-  const [isAdminView, setIsAdminView] = useState(() => {
-    return window.location.hash.startsWith('#/admin') || window.location.pathname.startsWith('/admin');
-  });
+  const [isAdminView, setIsAdminView] = useState(false);
   const [adminTab, setAdminTab] = useState<AdminTab>('dashboard');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isAdm = window.location.hash.startsWith('#/admin') || window.location.pathname.startsWith('/admin');
+      setIsAdminView(isAdm);
+      if (isAdm) {
+        const parts = window.location.hash.split('/');
+        if (parts[2]) {
+          setAdminTab(parts[2] as AdminTab);
+        }
+      }
+    }
+  }, []);
 
   // Modals state
   const [isTrialModalOpen, setIsTrialModalOpen] = useState(false);

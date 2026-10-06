@@ -56,6 +56,7 @@ const notifySubscribers = () => {
 };
 
 function getFromStorage<T>(key: string, defaultValue: T): T {
+  if (typeof window === 'undefined') return defaultValue;
   try {
     const raw = localStorage.getItem(key);
     if (!raw) return defaultValue;
@@ -66,6 +67,7 @@ function getFromStorage<T>(key: string, defaultValue: T): T {
 }
 
 function setToStorage<T>(key: string, value: T): void {
+  if (typeof window === 'undefined') return;
   try {
     localStorage.setItem(key, JSON.stringify(value));
     notifySubscribers();
@@ -391,10 +393,12 @@ export const deleteMessage = (id: string): boolean => {
 const DEFAULT_PASSWORD = 'admin123';
 
 export const getStoredPassword = (): string => {
+  if (typeof window === 'undefined') return DEFAULT_PASSWORD;
   return localStorage.getItem(STORAGE_KEYS.ADMIN_PASSWORD) || DEFAULT_PASSWORD;
 };
 
 export const updateAdminPassword = (newPassword: string): void => {
+  if (typeof window === 'undefined') return;
   localStorage.setItem(STORAGE_KEYS.ADMIN_PASSWORD, newPassword);
 };
 
@@ -421,6 +425,7 @@ export const adminLogin = (email: string, pass: string): { success: boolean; err
 };
 
 export const adminLogout = (): void => {
+  if (typeof window === 'undefined') return;
   try {
     localStorage.removeItem(STORAGE_KEYS.AUTH);
     notifySubscribers();
