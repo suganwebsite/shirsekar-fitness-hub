@@ -1,4 +1,4 @@
-import { put } from '@vercel/blob';
+import { del, put } from '@vercel/blob';
 
 export async function uploadImageToBlob(
   file: File | Blob,
@@ -23,5 +23,18 @@ export async function uploadImageToBlob(
   } catch (err: any) {
     console.error('Vercel Blob upload failed:', err);
     return { url: '', error: err.message || 'Image upload to Vercel Blob failed.' };
+  }
+}
+
+export async function deleteImageFromBlob(url: string): Promise<boolean> {
+  try {
+    if (!process.env.BLOB_READ_WRITE_TOKEN || !url || !url.startsWith('https://')) {
+      return true;
+    }
+    await del(url, { token: process.env.BLOB_READ_WRITE_TOKEN });
+    return true;
+  } catch (err: any) {
+    console.error('Vercel Blob delete failed:', err);
+    return false;
   }
 }

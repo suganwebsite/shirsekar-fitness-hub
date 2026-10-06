@@ -10,28 +10,18 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Email and password are required.' }, { status: 400 });
     }
 
-    const isValid = validateAdminCredentials(email, password);
-    if (!isValid) {
+    const validation = await validateAdminCredentials(email, password);
+    if (!validation.valid || !validation.user) {
       return NextResponse.json({ error: 'Invalid email or password.' }, { status: 401 });
     }
 
-    const token = await createAdminToken({
-      id: 'admin-1',
-      email: email.trim().toLowerCase(),
-      name: "Shirsekar's Hub Admin",
-      role: 'super_admin',
-    });
+    const token = await createAdminToken(validation.user);
 
     await setAdminSessionCookie(token);
 
     return NextResponse.json({
       success: true,
-      user: {
-        id: 'admin-1',
-        email: email.trim().toLowerCase(),
-        name: "Shirsekar's Hub Admin",
-        role: 'super_admin',
-      },
+      user: validation.user,
     });
   } catch (err: any) {
     console.error('Login error:', err);

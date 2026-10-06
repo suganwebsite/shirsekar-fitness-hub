@@ -15,20 +15,15 @@ export async function loginAdminAction(formData: {
   pass: string;
 }): Promise<{ success: boolean; error?: string; user?: AdminPayload }> {
   try {
-    const isValid = validateAdminCredentials(formData.email, formData.pass);
-    if (!isValid) {
+    const validation = await validateAdminCredentials(formData.email, formData.pass);
+    if (!validation.valid || !validation.user) {
       return {
         success: false,
         error: 'Invalid credentials. Default is admin@shirsekarfitness.com / admin123',
       };
     }
 
-    const payload: AdminPayload = {
-      id: 'admin-1',
-      email: formData.email.toLowerCase().trim(),
-      name: 'Gym Manager',
-      role: 'super_admin',
-    };
+    const payload: AdminPayload = validation.user;
 
     const token = await createAdminToken(payload);
     await setAdminSessionCookie(token);

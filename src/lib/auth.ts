@@ -13,6 +13,72 @@ export interface AdminPayload {
   role: string;
 }
 
+export async function hashPassword(password: string): Promise<string> {
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const saltHex = Array.from(salt)
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+  const encoder = new TextEncoder();
+  const keyMaterial = await crypto.subtle.importKey(
+    'raw',
+    encoder.encode(password),
+    { name: 'PBKDF2' },
+    false,
+    ['deriveBits']
+  );
+  const derivedBits = await crypto.subtle.deriveBits(
+    {
+      name: 'PBKDF2',
+      salt,
+      iterations: 100000,
+      hash: 'SHA-256',
+    },
+    keyMaterial,
+    256
+  );
+  const hashHex = Array.from(new Uint8Array(derivedBits))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+  return `pbkdf2:100000:${saltHex}:${hashHex}`;
+}
+
+export async function verifyPassword(password: string, storedHash: string): Promise<boolean> {
+  if (!storedHash.startsWith('pbkdf2:')) {
+    return password === storedHash;
+  }
+  const parts = storedHash.split(':');
+  if (parts.length !== 4) return false;
+  const iterations = parseInt(parts[1], 10);
+  const saltHex = parts[2];
+  const originalHashHex = parts[3];
+
+  const matched = saltHex.match(/.{1,2}/g);
+  if (!matched) return false;
+  const salt = new Uint8Array(matched.map((byte) => parseInt(byte, 16)));
+  const encoder = new TextEncoder();
+  const keyMaterial = await crypto.subtle.importKey(
+    'raw',
+    encoder.encode(password),
+    { name: 'PBKDF2' },
+    false,
+    ['deriveBits']
+  );
+  const derivedBits = await crypto.subtle.deriveBits(
+    {
+      name: 'PBKDF2',
+      salt,
+      iterations,
+      hash: 'SHA-256',
+    },
+    keyMaterial,
+    256
+  );
+  const computedHashHex = Array.from(new Uint8Array(derivedBits))
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('');
+  return computedHashHex === originalHashHex;
+}
+
 export async function createAdminToken(payload: AdminPayload): Promise<string> {
   return await new SignJWT({ ...payload })
     .setProtectedHeader({ alg: 'HS256' })
@@ -57,8 +123,22 @@ export async function removeAdminSessionCookie() {
   cookieStore.delete(COOKIE_NAME);
 }
 
-export function validateAdminCredentials(email: string, pass: string): boolean {
-  const validEmail = (process.env.ADMIN_DEFAULT_EMAIL || 'admin@shirsekarfitness.com').toLowerCase().trim();
-  const validPass = process.env.ADMIN_DEFAULT_PASSWORD || 'admin123';
-  return email.toLowerCase().trim() === validEmail && pass === validPass;
+export async function validateAdminCredentials(email: string, pass: string): Promise<{ valid: boolean; user?: AdminPayload }> {
+  const defaultEmail = (process.env.ADMIN_DEFAULT_EMAIL || 'admin@shirsekarfitness.com').toLowerCase().trim();
+  const defaultPass = process.env.ADMIN_DEFAULT_PASSWORD || 'admin123';
+
+  // Check against env defaults first
+  if (email.toLowerCase().trim() === defaultEmail && pass === defaultPass) {
+    return {
+      valid: true,
+      user: {
+        id: 'admin-default',
+        email: defaultEmail,
+        name: "Shirsekar's Hub Admin",
+        role: 'super_admin',
+      },
+    };
+  }
+
+  return { valid: false };
 }

@@ -369,6 +369,28 @@ export async function updateFacility(id: string, updates: Partial<Facility>): Pr
   }
 }
 
+export async function createFacility(data: Omit<Facility, 'id'>): Promise<Facility> {
+  if (!isDatabaseConfigured()) {
+    const newFac = { ...data, id: 'fac-' + Date.now() };
+    memoryStore.facilities.push(newFac);
+    return newFac;
+  }
+  return await prisma.facility.create({ data });
+}
+
+export async function deleteFacility(id: string): Promise<boolean> {
+  if (!isDatabaseConfigured()) {
+    memoryStore.facilities = memoryStore.facilities.filter((f) => f.id !== id);
+    return true;
+  }
+  try {
+    await prisma.facility.delete({ where: { id } });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export async function getPrograms(): Promise<TrainingProgram[]> {
   if (!isDatabaseConfigured()) return memoryStore.programs;
   try {
@@ -631,14 +653,17 @@ export async function createContactMessage(data: Omit<ContactMessage, 'id' | 'cr
   }
 }
 
-export async function markMessageRead(id: string): Promise<void> {
+export async function markMessageRead(id: string): Promise<boolean> {
   if (!isDatabaseConfigured()) {
     memoryStore.messages = memoryStore.messages.map((m) => (m.id === id ? { ...m, isRead: true } : m));
-    return;
+    return true;
   }
   try {
     await prisma.contactMessage.update({ where: { id }, data: { isRead: true } });
-  } catch {}
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export async function deleteMessage(id: string): Promise<boolean> {
