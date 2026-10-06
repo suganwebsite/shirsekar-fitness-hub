@@ -38,8 +38,8 @@ model BusinessSetting {
   googleMapsEmbedUrl     String   @default("https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.218525791775!2d72.8488737!3d19.0541097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c927f8a7e0cb%3A0x6b4efb4d241774b7!2sShirsekar's%20Fitness%20Hub!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin")
   googleMapsDirectUrl    String   @default("https://maps.google.com/?q=Shirsekar's+Fitness+Hub+Bandra+East+Mumbai")
   googleReviewsUrl       String   @default("https://search.google.com/local/reviews?placeid=ChIJy-CH-CfZ5zsRt3QXJE37Tms")
-  heroImageUrl           String   @default("/src/assets/images/hero_gym_aesthetic_1791189493817.jpg")
-  facilityHeroUrl        String   @default("/src/assets/images/gym_floor_community_1791189569733.jpg")
+  heroImageUrl           String   @default("/images/hero_gym_aesthetic_1791189493817.jpg")
+  facilityHeroUrl        String   @default("/images/gym_floor_community_1791189558545.jpg")
   instagramUrl           String?
   facebookUrl            String?
   youtubeUrl             String?

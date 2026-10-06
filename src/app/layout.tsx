@@ -1,6 +1,21 @@
 import type { Metadata } from 'next';
+import { Oswald, Plus_Jakarta_Sans } from 'next/font/google';
 import React from 'react';
 import '../index.css';
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-sans',
+  display: 'swap',
+});
+
+const oswald = Oswald({
+  subsets: ['latin'],
+  weight: ['500', '600', '700'],
+  variable: '--font-heading',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: "Shirsekar's Fitness Hub | Gym in Bandra East, Mumbai",
@@ -65,8 +80,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth dark">
-      <body className="min-h-screen bg-neutral-950 text-neutral-100 antialiased selection:bg-amber-500 selection:text-black">
+    <html lang="en" className={`scroll-smooth dark ${plusJakartaSans.variable} ${oswald.variable}`}>
+      <body className={`${plusJakartaSans.className} min-h-screen bg-neutral-950 text-neutral-100 antialiased selection:bg-amber-500 selection:text-black`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

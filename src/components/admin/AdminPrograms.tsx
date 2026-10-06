@@ -37,7 +37,7 @@ export const AdminPrograms: React.FC<AdminProgramsProps> = ({
     setTargetAudience('');
     setDuration('12-Week Program');
     setDifficulty('All Levels');
-    setImage('/src/assets/images/facility_strength_weights_1791189513690.jpg');
+    setImage('/images/facility_strength_weights_1791189513690.jpg');
     setIsActive(true);
   };
 

@@ -289,13 +289,14 @@ export async function getMemberships(): Promise<MembershipPlan[]> {
   try {
     await seedPostgreSQL();
     const plans = await prisma.membershipPlan.findMany({ orderBy: { order: 'asc' } });
+    if (!plans || plans.length === 0) return DEFAULT_MEMBERSHIP_PLANS;
     return plans.map((p: any) => ({
       ...p,
       discountOffer: p.discountOffer || undefined,
     }));
   } catch (err) {
     console.error('Error fetching memberships from DB:', err);
-    return memoryStore.memberships;
+    return DEFAULT_MEMBERSHIP_PLANS;
   }
 }
 
@@ -349,9 +350,11 @@ export async function getFacilities(): Promise<Facility[]> {
   if (!isDatabaseConfigured()) return memoryStore.facilities;
   try {
     await seedPostgreSQL();
-    return await prisma.facility.findMany({ orderBy: { order: 'asc' } });
+    const facs = await prisma.facility.findMany({ orderBy: { order: 'asc' } });
+    if (!facs || facs.length === 0) return DEFAULT_FACILITIES;
+    return facs;
   } catch {
-    return memoryStore.facilities;
+    return DEFAULT_FACILITIES;
   }
 }
 
@@ -396,12 +399,13 @@ export async function getPrograms(): Promise<TrainingProgram[]> {
   try {
     await seedPostgreSQL();
     const progs = await prisma.trainingProgram.findMany({ orderBy: { order: 'asc' } });
+    if (!progs || progs.length === 0) return DEFAULT_TRAINING_PROGRAMS;
     return progs.map((p: any) => ({
       ...p,
       difficulty: p.difficulty as TrainingProgram['difficulty'],
     }));
   } catch {
-    return memoryStore.programs;
+    return DEFAULT_TRAINING_PROGRAMS;
   }
 }
 
@@ -448,13 +452,14 @@ export async function getGallery(): Promise<GalleryItem[]> {
   try {
     await seedPostgreSQL();
     const items = await prisma.galleryItem.findMany({ orderBy: { order: 'asc' } });
+    if (!items || items.length === 0) return DEFAULT_GALLERY;
     return items.map((g: any) => ({
       ...g,
       category: g.category as GalleryItem['category'],
       caption: g.caption || undefined,
     }));
   } catch {
-    return memoryStore.gallery;
+    return DEFAULT_GALLERY;
   }
 }
 
@@ -495,13 +500,14 @@ export async function getTestimonials(): Promise<Testimonial[]> {
   try {
     await seedPostgreSQL();
     const items = await prisma.testimonial.findMany({ orderBy: { createdAt: 'desc' } });
+    if (!items || items.length === 0) return DEFAULT_TESTIMONIALS;
     return items.map((t: any) => ({
       ...t,
       role: t.role || undefined,
       source: t.source as Testimonial['source'],
     }));
   } catch {
-    return memoryStore.testimonials;
+    return DEFAULT_TESTIMONIALS;
   }
 }
 
@@ -560,9 +566,11 @@ export async function getFAQs(): Promise<FAQItem[]> {
   if (!isDatabaseConfigured()) return memoryStore.faqs;
   try {
     await seedPostgreSQL();
-    return await prisma.faqItem.findMany({ orderBy: { order: 'asc' } });
+    const items = await prisma.faqItem.findMany({ orderBy: { order: 'asc' } });
+    if (!items || items.length === 0) return DEFAULT_FAQS;
+    return items;
   } catch {
-    return memoryStore.faqs;
+    return DEFAULT_FAQS;
   }
 }
 
