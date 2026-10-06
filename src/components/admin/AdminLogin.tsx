@@ -1,11 +1,11 @@
 'use client';
 
-import { loginAdminAction } from '@/app/actions/auth';
+import { adminLogin } from '../../services/storage';
 import { ArrowLeft, Dumbbell, KeyRound, Lock, Mail, ShieldAlert } from 'lucide-react';
 import React, { useState } from 'react';
 
 interface AdminLoginProps {
-  onLoginSuccess: (user: any) => void;
+  onLoginSuccess: (user?: any) => void;
   onBackToWebsite: () => void;
 }
 
@@ -24,10 +24,10 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({
     setIsLoading(true);
 
     try {
-      const res = await loginAdminAction({ email, pass: password });
+      const res = adminLogin(email, password);
       setIsLoading(false);
-      if (res.success && res.user) {
-        onLoginSuccess(res.user);
+      if (res.success) {
+        onLoginSuccess();
       } else {
         setError(res.error || 'Authentication failed');
       }

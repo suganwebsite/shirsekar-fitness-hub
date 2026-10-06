@@ -1,8 +1,8 @@
 'use client';
 
-import { submitMembershipEnquiry } from '@/app/actions/leads';
-import { BusinessSettings, Lead, MembershipPlan } from '@/types';
-import { createPhoneLink, createWhatsAppLink } from '@/utils/whatsapp';
+import { createLead } from '../../services/storage';
+import { BusinessSettings, Lead, MembershipPlan } from '../../types';
+import { createPhoneLink, createWhatsAppLink } from '../../utils/whatsapp';
 import { CheckCircle2, Dumbbell, MessageSquare, Phone, X } from 'lucide-react';
 import React, { useState } from 'react';
 
@@ -50,22 +50,20 @@ export const MembershipModal: React.FC<MembershipModalProps> = ({
 
     setIsSubmitting(true);
     try {
-      const res = await submitMembershipEnquiry({
+      const newLead = createLead({
         name: name.trim(),
         phone: cleanPhone,
         email: email.trim() || undefined,
-        planName,
-        duration: plan?.duration,
+        goal: `Membership: ${planName}`,
+        message: `Enquiring for plan: ${planName} (${plan?.duration || 'standard'})`,
+        status: 'new',
+        source: 'membership_enquiry',
       });
 
       setIsSubmitting(false);
-      if (res.success && res.lead) {
-        if (onLeadSubmitted) onLeadSubmitted(res.lead);
-        setSubmitted(true);
-      } else {
-        setError(res.error || 'Failed to submit enquiry.');
-      }
-    } catch (err: any) {
+      setSubmitted(true);
+      if (onLeadSubmitted) onLeadSubmitted(newLead);
+    } catch {
       setIsSubmitting(false);
       setError('Failed to submit enquiry. Please use WhatsApp directly.');
     }

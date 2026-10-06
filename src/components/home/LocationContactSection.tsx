@@ -1,8 +1,8 @@
 'use client';
 
-import { submitContactMessage } from '@/app/actions/leads';
-import { BusinessSettings } from '@/types';
-import { createPhoneLink, createWhatsAppLink } from '@/utils/whatsapp';
+import { createContactMessage } from '../../services/storage';
+import { BusinessSettings } from '../../types';
+import { createPhoneLink, createWhatsAppLink } from '../../utils/whatsapp';
 import {
   Calendar,
   CheckCircle2,
@@ -44,7 +44,7 @@ export const LocationContactSection: React.FC<LocationContactSectionProps> = ({
     setError('');
 
     try {
-      const res = await submitContactMessage({
+      createContactMessage({
         name: name.trim(),
         phone: phone.trim(),
         email: email.trim() || undefined,
@@ -53,23 +53,19 @@ export const LocationContactSection: React.FC<LocationContactSectionProps> = ({
       });
 
       setIsSubmitting(false);
-      if (res.success) {
-        setIsSent(true);
-        if (onMessageSent) {
-          onMessageSent({
-            name: name.trim(),
-            phone: phone.trim(),
-            email: email.trim() || undefined,
-            message: message.trim(),
-          });
-        }
-        setName('');
-        setPhone('');
-        setEmail('');
-        setMessage('');
-      } else {
-        setError(res.error || 'Failed to submit message.');
+      setIsSent(true);
+      if (onMessageSent) {
+        onMessageSent({
+          name: name.trim(),
+          phone: phone.trim(),
+          email: email.trim() || undefined,
+          message: message.trim(),
+        });
       }
+      setName('');
+      setPhone('');
+      setEmail('');
+      setMessage('');
     } catch {
       setIsSubmitting(false);
       setError('Failed to submit message. Please try WhatsApp directly.');

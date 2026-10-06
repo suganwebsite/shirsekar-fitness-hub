@@ -1,7 +1,45 @@
 'use server';
 
 import { createContactMessage, createLead, deleteLead, updateLeadStatus } from '../../lib/db';
-import { LeadStatus } from '../../types';
+import { Lead, LeadStatus } from '../../types';
+
+export async function createManualLeadAction(data: Omit<Lead, 'id' | 'createdAt' | 'updatedAt'>) {
+  try {
+    const lead = await createLead(data);
+    return { success: true, lead };
+  } catch (err: any) {
+    console.error('Server Action createManualLeadAction error:', err);
+    return { success: false, error: 'Failed to create lead.' };
+  }
+}
+
+export async function submitFreeTrialLead(data: {
+  name: string;
+  phone: string;
+  email?: string;
+  goal?: string;
+  preferredDate?: string;
+  preferredTime?: string;
+  message?: string;
+}) {
+  try {
+    const lead = await createLead({
+      name: data.name.trim(),
+      phone: data.phone.trim(),
+      email: data.email?.trim(),
+      goal: data.goal || 'Strength Training',
+      preferredDate: data.preferredDate,
+      preferredTime: data.preferredTime,
+      message: data.message?.trim(),
+      status: 'new',
+      source: 'free_trial',
+    });
+    return { success: true, lead };
+  } catch (err: any) {
+    console.error('Server Action submitFreeTrialLead error:', err);
+    return { success: false, error: 'Failed to submit free trial.' };
+  }
+}
 
 export async function submitTrialLead(formData: FormData) {
   try {

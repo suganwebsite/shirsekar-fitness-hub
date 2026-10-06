@@ -1,8 +1,8 @@
 'use client';
 
-import { submitFreeTrialLead } from '@/app/actions/leads';
-import { BusinessSettings, Lead } from '@/types';
-import { createPhoneLink, createWhatsAppLink } from '@/utils/whatsapp';
+import { createLead } from '../../services/storage';
+import { BusinessSettings, Lead } from '../../types';
+import { createPhoneLink, createWhatsAppLink } from '../../utils/whatsapp';
 import {
   Calendar,
   CheckCircle,
@@ -55,7 +55,7 @@ export const FreeTrialLeadForm: React.FC<FreeTrialLeadFormProps> = ({
     setIsSubmitting(true);
 
     try {
-      const res = await submitFreeTrialLead({
+      const newLead = createLead({
         name: name.trim(),
         phone: cleanPhone,
         email: email.trim() || undefined,
@@ -63,17 +63,14 @@ export const FreeTrialLeadForm: React.FC<FreeTrialLeadFormProps> = ({
         preferredDate: visitDate || undefined,
         preferredTime: visitTime,
         message: message.trim() || undefined,
+        status: 'new',
+        source: 'free_trial',
       });
 
       setIsSubmitting(false);
-
-      if (res.success && res.lead) {
-        setSubmittedLead(res.lead);
-        if (onLeadSubmitted) onLeadSubmitted(res.lead);
-      } else {
-        setErrorMessage(res.error || 'Failed to submit booking. Please try WhatsApp directly.');
-      }
-    } catch (err: any) {
+      setSubmittedLead(newLead);
+      if (onLeadSubmitted) onLeadSubmitted(newLead);
+    } catch {
       setIsSubmitting(false);
       setErrorMessage('Failed to submit booking. Please try WhatsApp directly.');
     }
