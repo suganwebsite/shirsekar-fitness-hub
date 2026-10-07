@@ -1,0 +1,14 @@
+[build]
+  command = "bun run build"
+  publish = "dist"
+
+[build.environment]
+  # The Next.js runtime is enabled in the Netlify UI, but this site deploys the
+  # Vite single-page app from dist/. Skip the Next.js plugin so it doesn't fail the build.
+  NETLIFY_NEXT_PLUGIN_SKIP = "true"
+
+# Single-page app fallback so client-side paths like /admin load index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
